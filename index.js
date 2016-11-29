@@ -7,7 +7,8 @@ const horloge = require('commander');
 
 const timer = i => {
   if (i === 0){
-    console.log("That's it");
+    var colors = require('colors');
+    console.log("That's it".red);
     return 0;
   }else if(i % 60 === 0){
     if(i / 60 <= 5 && i / 60 > 0){
@@ -16,7 +17,10 @@ const timer = i => {
 }else  if(i === 90){
     console.log(((i - (i % 60)) / 60) + " min " + (i % 60) + " sec");
   }else if(i === 30 || i === 20 || i <= 10){
-    console.log(i + " sec");
+
+    var colors = require('colors');
+
+    console.log(colors.red(i) + " sec".red);
   }
     setTimeout(timer, 1000 ,i - 1);
 }
