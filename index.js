@@ -1,24 +1,34 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies
- */
 const horloge = require('commander');
 
-const startTimer = function (opts) {
-  if (opts.breakDuration) {
-    console.log('Started with --break_duration %s', opts.breakDuration);
-  }
-  if (opts.workDuration) {
-    console.log('Started with --work_duration %s', opts.workDuration);
-  }
-};
+
+ const funk = function(...arr){
+   
+   if(isNaN(arr[1])){
+     arr[1]=0;
+   }
+   if(arr[1]===0 && arr[0]!==0){
+         console.log(arr[0]+ "m left");
+         arr[0]--;
+         arr[1]=60;
+   }
+   if(arr[0]===0 && arr[1]<10){ 
+     console.log(arr[1]);
+   }
+   
+   if(arr[1]===0 && arr[0]===0){
+     console.log("time is up");
+    }
+    else{
+      
+    setTimeout(funk, 1000, arr[0], arr[1]-1);
+    } 
+   };
 
 horloge
-  .command('start')
-  .description('start the Horloge timer.')
-  .option('-b, --break-duration <duration>', 'Time in minutes for break sessions')
-  .option('-w, --work-duration <duration>', 'Time in minutes for work sessions')
-  .action(startTimer);
+  .command('start <d> <a>')
+  .description('starts the horloge timer with a duration in minutes.')
+  .action(funk);
 
 horloge.parse(process.argv);
