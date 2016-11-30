@@ -3,40 +3,31 @@
 const horloge = require('commander');
 
 
-const hashvark = function(d){
-  if(d%60===0){ 
-    if(d/60<=5 && d/60>0){
-      console.log(~~(d/60)+"mn left");
+ const funk = function(...arr){
+   
+   if(isNaN(arr[1])){
+     arr[1]=0;
+   }
+   if(arr[1]===0 && arr[0]!==0){
+         console.log(arr[0]+ "m left");
+         arr[0]--;
+         arr[1]=60;
+   }
+   if(arr[0]===0 && arr[1]<10){ 
+     console.log(arr[1]);
+   }
+   
+   if(arr[1]===0 && arr[0]===0){
+     console.log("time is up");
     }
-  }
-  if(d===90){
-      console.log("1mn 30s left");
-  }
-  if(d===30 || d===20){
-      console.log(d+"s left");
-  }
-  if(d<=10){
-        console.log(d);
-  }
-  if(d===0) {
-    console.log("Time's up!");
-    clearInterval(a);
-  }
-};
-const funk= function(c){
-  if(c===undefined){
-    c=25;
-  }
-  c=fun(c);
-  const a= setInterval(function(){
-    if(c>=0) {hashvark(c--)}},1000);
-};
-const fun= function(p){
-  return p*60;
-};
+    else{
+      
+    setTimeout(funk, 1000, arr[0], arr[1]-1);
+    } 
+   };
 
 horloge
-  .command('start <d>')
+  .command('start <d> <a>')
   .description('starts the horloge timer with a duration in minutes.')
   .action(funk);
 
