@@ -3,22 +3,24 @@
 /**
  * Module dependencies
  */
+
 const horloge = require('commander');
 
-const startTimer = function (opts) {
-  if (opts.breakDuration) {
-    console.log('Started with --break_duration %s', opts.breakDuration);
-  }
-  if (opts.workDuration) {
-    console.log('Started with --work_duration %s', opts.workDuration);
-  }
+const timer = (duration) => {
+  const interval = setInterval(() => {
+    if (duration === 0) {
+      console.log("Time's up");
+      clearInterval(interval);
+    } else {
+      console.log(`${duration} minutes left`);
+      duration -= 1;
+    }
+  }, 60 * 1000);
 };
 
 horloge
-  .command('start')
+  .command('start <duration>')
   .description('start the Horloge timer.')
-  .option('-b, --break-duration <duration>', 'Time in minutes for break sessions')
-  .option('-w, --work-duration <duration>', 'Time in minutes for work sessions')
-  .action(startTimer);
+  .action(timer);
 
 horloge.parse(process.argv);
