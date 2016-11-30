@@ -5,20 +5,34 @@
  */
 const horloge = require('commander');
 
-const startTimer = function (opts) {
-  if (opts.breakDuration) {
-    console.log('Started with --break_duration %s', opts.breakDuration);
+const timer = i => {
+  if (i === 0){
+    var colors = require('colors');
+    console.log("That's it".red);
+    return 0;
+  }else if(i % 60 === 0){
+    if(i / 60 <= 5 && i / 60 > 0){
+    console.log((i / 60) + " min");
   }
-  if (opts.workDuration) {
-    console.log('Started with --work_duration %s', opts.workDuration);
+}else  if(i === 90){
+    console.log(((i - (i % 60)) / 60) + " min " + (i % 60) + " sec");
+  }else if(i === 30 || i === 20 || i <= 10){
+
+    var colors = require('colors');
+
+    console.log(colors.red(i) + " sec".red);
   }
+    setTimeout(timer, 1000 ,i - 1);
+}
+
+const startTimer = opts => {
+  console.log("The Timer Just Started")
+  timer(opts * 60);
 };
 
 horloge
-  .command('start')
+  .command('start <t>')
   .description('start the Horloge timer.')
-  .option('-b, --break-duration <duration>', 'Time in minutes for break sessions')
-  .option('-w, --work-duration <duration>', 'Time in minutes for work sessions')
   .action(startTimer);
 
 horloge.parse(process.argv);
