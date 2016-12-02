@@ -8,22 +8,29 @@ const horloge = require('commander');
 /**
  * Methods
  */
-const runInterval = function (duration, interval = 60000) {
-  console.log(`${duration}mn left`);
-  if (duration === 0) {
-    console.log("Time's up");
-  } else {
-    // calls runInterval after interval is elapsed with the updated parameters
-    setTimeout(runInterval, interval, duration - 1, interval);
+
+const runInterval = function (duration, interval = 1000) {
+  if (duration <= 0){
+        console.log('Time is up');
+    return 0;
+  }else if(duration % 60 === 0 && (duration / 60 <= 5 && duration / 60 > 0)){
+    console.log(`${duration / 60} min`);
+  }else  if(duration === 90){
+    console.log(`${(duration - (duration % 60)) / 60} min ${duration % 60} sec`);
+  }else if(duration === 30 || duration === 20 || duration <= 10){
+    console.log(`${duration} sec`);
   }
-};
+   // calls runInterval after interval is elapsed with the updated parameters
+    setTimeout(runInterval, interval, duration - 1, interval);
+  };
 
 /**
  * Interface
  */
 const controls = {
   start(duration) {
-    runInterval(duration);
+    console.log('Timer just started');
+    runInterval(duration * 60);
   },
 };
 
