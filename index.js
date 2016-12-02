@@ -5,30 +5,38 @@
  */
 const horloge = require('commander');
 
-const timer = (i) => {
-  if (i === 0) {
-    console.log('That is it');
-    return;
-  } else if (i % 60 === 0) {
-    if (i / 60 <= 5 && i / 60 > 0) {
-      console.log(`${i / 60} min`);
-    }
-  } else if (i === 90) {
-    console.log(`${(i - (i % 60)) / 60} min ${i % 60} sec`);
-  } else if (i === 30 || i === 20 || i <= 10) {
-    console.log(`${i} sec`);
-  }
-  setTimeout(timer, 1000, i - 1);
-};
+/**
+ * Methods
+ */
 
-const startTimer = (opts) => {
-  console.log('The Timer Just Started');
-  timer(opts * 60);
+const runInterval = function (duration, interval = 1000) {
+  if (duration <= 0){
+        console.log('Time is up');
+    return 0;
+  }else if(duration % 60 === 0 && (duration / 60 <= 5 && duration / 60 > 0)){
+    console.log(`${duration / 60} min`);
+  }else  if(duration === 90){
+    console.log(`${(duration - (duration % 60)) / 60} min ${duration % 60} sec`);
+  }else if(duration === 30 || duration === 20 || duration <= 10){
+    console.log(`${duration} sec`);
+  }
+   // calls runInterval after interval is elapsed with the updated parameters
+    setTimeout(runInterval, interval, duration - 1, interval);
+  };
+
+/**
+ * Interface
+ */
+const controls = {
+  start(duration) {
+    console.log('Timer just started');
+    runInterval(duration * 60);
+  },
 };
 
 horloge
-  .command('start <t>')
-  .description('start the Horloge timer.')
-  .action(startTimer);
+  .command('start <duration>')
+  .description('starts the horloge timer with a duration in minutes.')
+  .action(controls.start);
 
 horloge.parse(process.argv);
