@@ -28,7 +28,7 @@ const controls = {
 };
 
 horloge
-  .command('start <duration>')
+  //.command('start <duration>')
   .description('starts the horloge timer with a duration in minutes.')
   .action(controls.start);
 
