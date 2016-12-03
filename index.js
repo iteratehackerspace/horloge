@@ -9,10 +9,10 @@ const horloge = require('commander');
  * Methods
  */
 const runInterval = function (duration = 25, interval = 60 * 1000) {
-  console.log(`${duration}mn left`);
   if (duration === 0) {
     console.log("Time's up");
   } else {
+    console.log(`${duration}mn left`);
     // calls runInterval after interval is elapsed with the updated parameters
     setTimeout(runInterval, interval, duration - 1, interval);
   }
