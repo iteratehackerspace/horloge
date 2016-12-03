@@ -8,7 +8,7 @@ const horloge = require('commander');
 /**
  * Methods
  */
-const runInterval = function (duration, interval = 60000) {
+const runInterval = function (duration = 25, interval = 60 * 1000) {
   console.log(`${duration}mn left`);
   if (duration === 0) {
     console.log("Time's up");
@@ -28,7 +28,7 @@ const controls = {
 };
 
 horloge
-  .command('start <duration>')
+  .command('start [duration]')
   .description('starts the horloge timer with a duration in minutes.')
   .action(controls.start);
 
