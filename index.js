@@ -4,11 +4,12 @@
  * Module dependencies
  */
 const horloge = require('commander');
+const chalk = require('chalk');
 
 /**
  * Methods
  */
-const runInterval = function (duration = 25, interval = process.env.HORLOGE_UNIT_VALUE) {
+const runInterval = function (duration, interval = process.env.HORLOGE_UNIT_VALUE) {
   if (duration === 0) {
     console.log("\nTime's up");
   } else {
@@ -25,6 +26,12 @@ const runInterval = function (duration = 25, interval = process.env.HORLOGE_UNIT
  */
 const controls = {
   start(duration) {
+    if (duration === undefined) {
+      duration = 25;
+    } else if (duration === '' || (duration % 1) !== 0) {
+      console.log(chalk.red.bold('<<<Please provide an integer value (ex. -> 5, 10, 12)>>>'));
+      return;
+    }
     runInterval(duration);
   },
 };
