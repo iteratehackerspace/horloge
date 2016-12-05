@@ -8,21 +8,32 @@ const horloge = require('commander');
 /**
  * Methods
  */
+const oneMinute = 60;
 
-const runInterval = function (duration, interval = 1000) {
-  if (duration <= 0){
-        console.log('Time is up');
+const runInterval = function (duration, interval = 1) {
+  const secondsOnly = (duration % oneMinute);
+  if (duration <= 0) {
+    console.log('Time is up');
     return 0;
-  }else if(duration % 60 === 0 && (duration / 60 <= 5 && duration / 60 > 0)){
-    console.log(`${duration / 60} min`);
-  }else  if(duration === 90){
-    console.log(`${(duration - (duration % 60)) / 60} min ${duration % 60} sec`);
-  }else if(duration === 30 || duration === 20 || duration <= 10){
+  } else if (duration % oneMinute === 0) {
+    if (duration / oneMinute <= 5) {
+      if (duration / oneMinute > 0) {
+        console.log(`${duration / oneMinute} min`);
+      }
+    }
+  } else if (duration === oneMinute + (oneMinute / 2)) {
+    console.log(`${(duration - secondsOnly) / oneMinute} min ${secondsOnly} sec`);
+  } else if (duration === (oneMinute / 2)) {
+    console.log(`${duration} sec`);
+  } else if (duration === (oneMinute / 3)) {
+    console.log(`${duration} sec`);
+  } else if (duration <= (oneMinute / 6)) {
     console.log(`${duration} sec`);
   }
    // calls runInterval after interval is elapsed with the updated parameters
-    setTimeout(runInterval, interval, duration - 1, interval);
-  };
+  setTimeout(runInterval, interval, duration - 1, interval);
+  return 0;
+};
 
 /**
  * Interface
@@ -30,7 +41,7 @@ const runInterval = function (duration, interval = 1000) {
 const controls = {
   start(duration) {
     console.log('Timer just started');
-    runInterval(duration * 60);
+    runInterval(duration * oneMinute);
   },
 };
 
