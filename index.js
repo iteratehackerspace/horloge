@@ -8,7 +8,7 @@ const horloge = require('commander');
 /**
  * Methods
  */
-const runInterval = function (duration = 25, interval = 60 * 1000) {
+const runInterval = function (duration = 25, interval = process.env.HORLOGE_UNIT_VALUE) {
   if (duration === 0) {
     console.log("Time's up");
   } else {
@@ -26,6 +26,11 @@ const controls = {
     runInterval(duration);
   },
 };
+
+/**
+ * Main
+ */
+process.env.HORLOGE_UNIT_VALUE = 1000;
 
 horloge
   .command('start [duration]')
