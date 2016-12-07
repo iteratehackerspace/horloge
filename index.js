@@ -10,9 +10,11 @@ const horloge = require('commander');
  */
 const runInterval = function (duration = 25, interval = process.env.HORLOGE_UNIT_VALUE) {
   if (duration === 0) {
-    console.log("Time's up");
+    console.log("\nTime's up");
   } else {
-    console.log(`${duration}mn left`);
+    process.stdout.clearLine();
+    process.stdout.cursorTo(0);
+    process.stdout.write(`${duration}mn left`);
     // calls runInterval after interval is elapsed with the updated parameters
     setTimeout(runInterval, interval, duration - 1, interval);
   }
