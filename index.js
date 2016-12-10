@@ -8,31 +8,42 @@ const horloge = require('commander');
 /**
  * Methods
  */
+
 const oneMinute = 60;
 
-const runInterval = function (duration, interval = 1) {
-  const secondsOnly = (duration % oneMinute);
-  if (duration <= 0) {
-    console.log('Time is up');
-    return 0;
-  } else if (duration % oneMinute === 0) {
-    if (duration / oneMinute <= 5) {
-      if (duration / oneMinute > 0) {
-        console.log(`${duration / oneMinute} min`);
+const runInterval = function (duration = 25, interval = process.env.HORLOGE_UNIT_VALUE) {
+    const secondsOnly = (duration % oneMinute);
+    if (duration <= 0) {
+      console.log('\nTime is up');
+      return 0;
+    } else if (duration % oneMinute === 0) {
+      if (duration / oneMinute <= 5) {
+        if (duration / oneMinute > 0) {
+          process.stdout.clearLine();
+          process.stdout.cursorTo(0);
+          process.stdout.write(`${duration / oneMinute} min`);
+        }
       }
-    }
-  } else if (duration === oneMinute + (oneMinute / 2)) {
-    console.log(`${(duration - secondsOnly) / oneMinute} min ${secondsOnly} sec`);
-  } else if (duration === (oneMinute / 2)) {
-    console.log(`${duration} sec`);
-  } else if (duration === (oneMinute / 3)) {
-    console.log(`${duration} sec`);
-  } else if (duration <= (oneMinute / 6)) {
-    console.log(`${duration} sec`);
-  }
-   // calls runInterval after interval is elapsed with the updated parameters
-  setTimeout(runInterval, interval, duration - 1, interval);
-  return 0;
+    } else if (duration === oneMinute + (oneMinute / 2)) {
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0);
+      process.stdout.write(`${(duration - secondsOnly) / oneMinute} min ${secondsOnly} sec`);
+    } else if (duration === (oneMinute / 2)) {
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0);
+      process.stdout.write(`${duration} sec`);
+    } else if (duration === (oneMinute / 3)) {
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0);
+      process.stdout.write(`${duration} sec`);
+    } else if (duration <= (oneMinute / 6)) {
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0);
+      process.stdout.write(`${duration} sec`);
+   }
+  // calls runInterval after interval is elapsed with the updated parameters
+    setTimeout(runInterval, interval, duration - 1, interval);
+    return 0;
 };
 
 /**
@@ -45,8 +56,13 @@ const controls = {
   },
 };
 
+/**
+ * Main
+ */
+process.env.HORLOGE_UNIT_VALUE = 1000;
+
 horloge
-  .command('start <duration>')
+  .command('start [duration]')
   .description('starts the horloge timer with a duration in minutes.')
   .action(controls.start);
 
